@@ -113,7 +113,11 @@ public class Game extends Application{
         Button[] skipTurnButton = new Button[4];
         
         for(int i = 0; i < 4; i++){
-            playerText[i] = new Text("Player " + (i+1));
+        	if(players[i].getPlayerStatus()) {
+        		playerText[i] = new Text("Player " + (i+1));
+        	}else {
+        		playerText[i] = new Text("Bot " + (i+1));
+        	}
             playerScoreText[i] = new Text("Playing");
             playerCaptureButton[i] = new Button("Capture");
             skipTurnButton[i] = new Button("Skip");
