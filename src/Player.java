@@ -68,5 +68,17 @@ public class Player{
     public void updatePlayerStatus() {
     	isAlive = !isAlive;
     }
+    
+    public List<Card> automaticGetChoosenCards() {
+    	for(int i = 1; i <= 2; i++) {
+    		choosenCards.add(handCards.get(handCards.size() - i));
+    	}
+    	return choosenCards;
+    }	
+    
+//    public boolean automaticChoosenCards() {
+//    	if(isAlive) return false;
+//    	return;
+//    }
 
 }
