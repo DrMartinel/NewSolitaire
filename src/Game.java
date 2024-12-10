@@ -152,7 +152,7 @@ public class Game extends Application{
         mainPane.setTop(player3Pane);
         mainPane.setRight(player4Pane);
         mainPane.setCenter(poolCardsPane);
-        mainPane.setPrefSize(1550, 900);
+        mainPane.setPrefSize(1000, 900);
         BorderPane.setAlignment(poolCardsPane, Pos.CENTER);
         player1Pane.setAlignment(Pos.CENTER);
         player3Pane.setAlignment(Pos.CENTER);
