@@ -40,6 +40,7 @@ public class Game extends Application{
                     playerCardsImage[i][j].setActive(true);
             }
         }
+        
 
         for(int i = 0; i < poolCardsImage.length; i++){
             if(i < poolCards.size()){
@@ -113,11 +114,7 @@ public class Game extends Application{
         Button[] skipTurnButton = new Button[4];
         
         for(int i = 0; i < 4; i++){
-        	if(players[i].getPlayerStatus()) {
-        		playerText[i] = new Text("Player " + (i+1));
-        	}else {
-        		playerText[i] = new Text("Bot " + (i+1));
-        	}
+        	playerText[i] = new Text("Player " + (i+1));
             playerScoreText[i] = new Text("Playing");
             playerCaptureButton[i] = new Button("Capture");
             skipTurnButton[i] = new Button("Skip");
@@ -294,6 +291,7 @@ public class Game extends Application{
                 		
                 		for(int x = numberOfPlayerHuman; x < numberOfPlayer; x++) {
                 			players[x].updatePlayerStatus();
+                			playerText[x].setText("Bot " + (x + 1));
                 		}
                 		
                 		initializeGame(numberOfPlayer);
@@ -393,13 +391,29 @@ public class Game extends Application{
                     
                     
                     // successful play, next player
-                    System.out.println("Player " + currentPlayerIdx + ": " + currentPlayer.getPlayerStatus());
                     playerCaptureButton[currentPlayerIdx].setDisable(true);
                     skipTurnButton[currentPlayerIdx].setDisable(true);
                     do {
                     	currentPlayerIdx = (currentPlayerIdx + 1)%numberOfPlayer;
                     	currentPlayer = players[currentPlayerIdx];
                     } while(!currentPlayer.getTurnStatus());
+                    
+                    while(!currentPlayer.getPlayerStatus()) {
+                    	poolCards.clear();
+                    	playedCards = players[currentPlayerIdx].automaticGetChoosenCards();
+                        if(playedCards != Card.getEmptyCard()){
+                        	for(Card card: playedCards) {
+                        		poolCards.add(card);
+                        		players[currentPlayerIdx].removeHandCard(card);
+                        	}
+                            captureStatus.setText(GameRule.classify(playedCards));
+                        }
+                        currentPlayer.clearChoosenCard();
+                        currentPlayerIdx = (currentPlayerIdx + 1)%numberOfPlayer;
+                        currentPlayer = players[currentPlayerIdx];
+                        
+                        System.out.println("it worked!!");
+                    }
                     
                     setNextPlayer(currentPlayerIdx);
                     playerCaptureButton[currentPlayerIdx].setDisable(false);
