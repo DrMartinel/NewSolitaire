@@ -70,15 +70,10 @@ public class Player{
     }
     
     public List<Card> automaticGetChoosenCards() {
-    	for(int i = 1; i <= 2; i++) {
-    		choosenCards.add(handCards.get(handCards.size() - i));
-    	}
+//    	for(int i = 1; i <= 1; i++) {
+//    		choosenCards.add(handCards.get(handCards.size() - i));
+//    	}
     	return choosenCards;
     }	
-    
-//    public boolean automaticChoosenCards() {
-//    	if(isAlive) return false;
-//    	return;
-//    }
 
 }

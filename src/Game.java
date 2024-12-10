@@ -152,7 +152,7 @@ public class Game extends Application{
         mainPane.setTop(player3Pane);
         mainPane.setRight(player4Pane);
         mainPane.setCenter(poolCardsPane);
-        mainPane.setPrefSize(1600, 1000);
+        mainPane.setPrefSize(1550, 900);
         BorderPane.setAlignment(poolCardsPane, Pos.CENTER);
         player1Pane.setAlignment(Pos.CENTER);
         player3Pane.setAlignment(Pos.CENTER);
@@ -163,7 +163,7 @@ public class Game extends Application{
         }
 
         VBox capturesBoard = new VBox(20);
-        Text captureBoardTitle = new Text("Capturing Status"), captureStatus = new Text("No Capture");
+        Text captureBoardTitle = new Text("Capturing Status"), captureStatus = new Text("Welcome!!!");
         captureBoardTitle.setFill(Color.WHITE);
         captureBoardTitle.setStyle("-fx-font: 25 arial");
         captureStatus.setStyle("-fx-font: 25 arial; -fx-fill: #ea8f79;");
@@ -393,26 +393,29 @@ public class Game extends Application{
                     // successful play, next player
                     playerCaptureButton[currentPlayerIdx].setDisable(true);
                     skipTurnButton[currentPlayerIdx].setDisable(true);
+                    //To skip players who have skipped already in a round
                     do {
                     	currentPlayerIdx = (currentPlayerIdx + 1)%numberOfPlayer;
                     	currentPlayer = players[currentPlayerIdx];
                     } while(!currentPlayer.getTurnStatus());
                     
+                    //To go through every single bots, and make them change poolCards and removeHandCards
                     while(!currentPlayer.getPlayerStatus()) {
-                    	poolCards.clear();
                     	playedCards = players[currentPlayerIdx].automaticGetChoosenCards();
-                        if(playedCards != Card.getEmptyCard()){
+                    	if(playedCards.size() != 0) {
+                    		poolCards.clear();
+                    		if(playedCards != Card.getEmptyCard()){
                         	for(Card card: playedCards) {
                         		poolCards.add(card);
                         		players[currentPlayerIdx].removeHandCard(card);
                         	}
                             captureStatus.setText(GameRule.classify(playedCards));
-                        }
-                        currentPlayer.clearChoosenCard();
+                    		}
+                    		currentPlayer.clearChoosenCard();
+                    	}
+                        
                         currentPlayerIdx = (currentPlayerIdx + 1)%numberOfPlayer;
                         currentPlayer = players[currentPlayerIdx];
-                        
-                        System.out.println("it worked!!");
                     }
                     
                     setNextPlayer(currentPlayerIdx);
